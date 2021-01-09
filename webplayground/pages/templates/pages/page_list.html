@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Páginas{% endblock %}
+{% block content %}
+{% include 'pages/includes/pages_menu.html' %}
+<main role="main">
+  <div class="container mb-4">
+    {% for page in pages|dictsort:"id" reversed %} <!-- De esta forma, ordenamos las instancias de la más reciente a la más vieja sólo para 
+      mostrarla en el template. Es decir, en la base de datos, el orden sigue siendo aquel especificado en el modelo o por nosotros al crear
+      la instancia. -->
+      <div class="row mt-3">
+        <div class="col-md-9 mx-auto">
+          <h2 class="mb-4">{{page.title}}</h2>
+          <div>
+            <p>{{page.content|striptags|safe|truncatechars:"200"}}</p>
+            <!--<p><a href="{°|° url 'page' page.id page.title|slugify °|°}">Leer más</a> # Esta es una opción.-->
+              <p><a href="{{ page.get_absolute_url }}">Leer más</a>
+              {% if request.user.is_staff %}
+                | <a href="{% url 'app_pages:PageUpdate' page.id page.title %}">Editar</a>
+                | <a href="{% url 'app_pages:PageDelete' page.id page.title %}">Borrar</a>
+              {% endif %}
+            </p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Perfil{% endblock %}
+{% block content %}
+<style>.errorlist{color:red;} label{display:none}</style> <!-- Haciendo uso de "label{display:none}" evitamos desplegar las etiquetas. -->
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %} <!--El campo "enctype='multipart/form-data'" se debe
+          de crear siempre que queramos contener archivos, ya sean imágenes o vídeos.-->
+          <div class="row">
+            <!-- Previa del avatar -->
+            <div class="col-md-2">
+              <!-- {°|° if request.user.profile.avatar °|°} -->
+              {% if profile.avatar %} <!-- Si el usuario ya ha subido una imagen de perfil, la mostramos. -->
+                <!-- <img src="{{request.user.profile.avatar.url}}" class="img-fluid"> -->
+                <img src="{{profile.avatar.url}}" class="img-fluid">
+                <p class="mt-1" style="color: green;"><i>¿Borrar?</i> <input type="checkbox" id="avatar-clear" name="avatar-clear"/></p>
+              {% else %} <!-- En caso de que el usuario no tenga (o haya eliminado) su foto de perfil, mostramos una genérica. -->
+                <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid">
+              {% endif %}
+            </div>
+            <!-- Formulario -->
+            <div class="col-md-10">
+              <h3>{{ request.user }}</h3>
+              <input type="file" name="avatar" class="form-control-file mt-3" id="id_avatar">
+              {{ form.bio }}
+              {{ form.link }}
+              <input type="email" value="{{request.user.email}}" class="form-control mt-3" readonly>
+              <div style="display:flex; justify-content:space-between; padding:2% 1% 0 1%;">
+                <p>Si deseas editar tu email haz click <a href="{% url 'app_registration:ProfileEmail' %}"><i>aquí</i></a>.</p>
+                <p>Para cambiar tu contraseña haz click <a href="{% url 'password_change' %}"><i>aquí</i></a>.</p>
+              </div>
+              <input type="submit" class="btn btn-primary btn-block mt-3" style="margin-top: 0 !important;" value="Actualizar">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

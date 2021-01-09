@@ -1,0 +1,47 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block content %}
+<style>.errorlist{color:red;}</style>
+<main role="main">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-9 mx-auto mb-5">
+        {% if "register" in request.GET %} <!-- "request" es enviado mediante el método "dispatch". Aunque no se declare, con el simple hecho de
+            heredar de cualquier vista CRUD (CreateView, etc.), por default las CBV heredan este método. -->
+            <p style="color:green;"><b>Registro Exitoso.</b></p>
+            <p style="color:blue;">El siguiente paso, es INICIAR SESIÓN.</p>
+        {% endif %}
+        <!-- Acceso: -->
+        <form action="" method="post">{% csrf_token %}
+          <h3 class="mb-4">Iniciar sesión</h3>
+          {% if form.non_field_errors %}
+            <p style="color:red">Usuario o contraseña incorrectos, prueba de nuevo.</p>
+          {% endif %}
+          <p>
+            <input type="text" name="username" autofocus maxlength="254" required autocomplete="off"
+              id="id_username" class="form-control" placeholder="Nombre de usuario"/>
+          </p>
+          <p>
+            <input type="password" name="password" required
+              id="id_password" class="form-control" placeholder="Contraseña"/>
+          </p>
+          <p><input type="submit" class="btn btn-primary btn-block" value="Acceder"></p>
+        </form>
+        <div style="display:flex; flex-flow:row wrap; width: 100%;">
+          <!-- Has olvidado la contraseña: -->
+          <div style="flex-basis:50%">
+            <h5 style="display:inline-block;">¿Has olvidado la contraseña?</h5>
+            <a href="{% url 'password_reset' %}" style="font-size: 16px"> <i>Has click aquí.</i></a>
+          </div>
+          <!-- Registro: -->
+          <div style="flex-basis:50%; display:flex; justify-content:flex-end;">
+            Aún no tienes cuenta.&nbsp <a href="{% url 'app_registration:SignUpView' %}" style="font-size: 16px"> <b>Registrate</b></a>
+          </div>
+          <!-- ########## -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
