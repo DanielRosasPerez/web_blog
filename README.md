@@ -6,3 +6,10 @@ http://danielrosas.pythonanywhere.com/
 
 
 Una vez ahí, da click en "Acceder" y después da click en "Registrate". Procede a registrarte, ingresa un nombre de usuario cualquiera, y un correo cualquiera (no importa que no exista). Listo!!! Ya puedes acceder a más funcionalidades dentro del blog. :) Buen día!
+
+Sí deseas acceder a la cuenta de súper usuario para poder crear y editar los posts, además de otra serie de funcionalidades, sal de la sesión actual y vuelve a dar click en "Acceder", está vez, ingresa con:  
+
+Usuario: Daniel  
+password: daniel  
+
+Y listo :)
